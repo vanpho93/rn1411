@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { View, FlatList, Text, StyleSheet, RefreshControl } from 'react-native';
 
 class LoadMoreList extends Component {
     constructor(props) {
@@ -27,14 +27,28 @@ class LoadMoreList extends Component {
                 { id: 'abcd19', author: 'hic', content: 'A et id non tenetur tenetur. Sed est consequatur reiciendis non. Minima libero et voluptatem maiores eaque voluptas magni animi. Odio quasi eum doloribus commodi sit natus et quaerat exercitationem. Quis nesciunt nisi consequatur. Quo qui quibusdam exercitationem error vero laboriosam qui tempora ea.' },
                 { id: 'abcd20', author: 'quia laborum soluta', content: 'Vitae consequatur est suscipit porro. Quisquam qui incidunt. Aut error debitis rerum. Aut amet ea in suscipit dolor laboriosam laborum qui dolore.' },
                 { id: 'abcd21', author: 'error est sequi', content: 'Temporibus aliquid eum. Consequatur quas voluptate. Neque sit pariatur enim qui nam. Voluptate consequatur rerum rerum cupiditate et. Error dignissimos delectus quos et quidem voluptas provident qui qui.' },
-            ]
+            ],
+            isRefreshing: false
         }
+        this.onRefresh = this.onRefresh.bind(this);
     }
+
+    onRefresh() {
+        this.setState({ isRefreshing: true });
+        setTimeout(() => this.setState({ isRefreshing: false }), 3000);
+    }
+
     render() {
-        const { posts } = this.state;
+        const { posts, isRefreshing } = this.state;
         return (
             <View style={styles.container}>
                 <FlatList
+                    refreshControl={
+                        <RefreshControl 
+                            refreshing={isRefreshing}
+                            onRefresh={this.onRefresh}
+                        />
+                    }
                     data={posts}
                     renderItem={({ item }) => (
                         <View style={styles.itemContainer}>
