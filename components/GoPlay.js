@@ -3,9 +3,11 @@ import { View, Text, StyleSheet } from 'react-native';
 
 class GoPlay extends Component {
     render() {
+        const { author, content } = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
-                <Text style={styles.author}>GoPlay Component</Text>
+                <Text style={styles.author}>{author}</Text>
+                <Text>{content}</Text>
             </View>
         );
     }

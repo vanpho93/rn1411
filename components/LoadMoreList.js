@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, StyleSheet, RefreshControl } from 'react-native';
+import { View, FlatList, Text, StyleSheet, RefreshControl, TouchableOpacity } from 'react-native';
 import { getMorePost } from '../api/getMorePost';
 
 class LoadMoreList extends Component {
@@ -31,6 +31,7 @@ class LoadMoreList extends Component {
 
     render() {
         const { posts, isRefreshing } = this.state;
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <FlatList
@@ -42,10 +43,10 @@ class LoadMoreList extends Component {
                     }
                     data={posts}
                     renderItem={({ item }) => (
-                        <View style={styles.itemContainer}>
+                        <TouchableOpacity style={styles.itemContainer} onPress={() => navigate('GoPlay', { author: item.author, content: item.content })}>
                             <Text style={styles.author}>Author: {item.author}</Text>
                             <Text style={styles.content}>{item.content}</Text>
-                        </View>
+                        </TouchableOpacity>
                     )}
                     keyExtractor={item => item.id}
                 />
