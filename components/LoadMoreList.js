@@ -19,7 +19,14 @@ class LoadMoreList extends Component {
 
     onRefresh() {
         this.setState({ isRefreshing: true });
-        setTimeout(() => this.setState({ isRefreshing: false }), 3000);
+        // setTimeout(() => this.setState({ isRefreshing: false }), 3000);
+        getMorePost()
+        .then(data => {
+            setTimeout(() => {
+                this.setState({ posts: data.concat(this.state.posts) });
+                this.setState({ isRefreshing: false });
+            }, 1500);
+        });
     }
 
     render() {
